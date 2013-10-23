@@ -1,0 +1,62 @@
+<head>
+  <title>TucJS Chat</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+</head>
+
+<body>
+  <h1>Hola TucJS!</h1>
+  <div id="wrapper">
+    {{> main}}
+  </div>
+</body>
+
+<template name="main">
+  {{#if currentRoom}}
+    {{> room}}
+  {{/if}}
+
+  {{#unless currentRoom}}
+    {{> rooms}}
+  {{/unless}}
+</template>
+
+<template name="room">
+  <div>
+    <h2>Sala: {{roomName}}</h2>
+    <ul id="messages">
+        {{#each messages}}
+          {{> messageItem}}
+        {{/each}}
+    </ul>
+    <form action="javascript:void(0)">
+        <label for="msg">Mensaje: </label>
+        <input id="msg" />
+        <button type="submit">Enviar mensaje</button>
+        <button type="button" id="leave">Salir de la sala</button>
+    </form>
+  </div>
+</template>
+
+<template name="rooms">
+  <div class="roomList">
+    <h2>Salas disponibles:</h2>
+    <p><button type="button" id="addRoom">Nueva sala</button></p>
+    <ul>
+      {{#each availableRooms}}
+        {{> roomItem}}
+      {{/each}}
+    </ul>
+  </div>
+</template>
+
+<template name="roomItem">
+  <li class="roomItem">
+    {{name}} <button class="enter">Entrar</button> - <button class="delete">Borrar</button>
+  </li>
+</template>
+
+<template name="messageItem">
+  <li class="messageItem">
+    <span class="{{authorClass}}">{{author}} [{{timestamp}}]:</span> {{text}}
+  </li>
+</template>
